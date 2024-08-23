@@ -17,18 +17,15 @@ const getCharacters = async (req, res) => {
     .skip((pag - 1) * limit)
     .limit(limit);
 
+  // Construct base URL dynamically from the request
+  const baseUrl = `${req.protocol}://${req.get("host")}${req.baseUrl}`;
+
   res.json({
     characters_retrieved: allCharacters.length,
-    prevPage:
-      pag > 1
-        ? `http://localhost:3000/characters?pag=${pag - 1}&limit=${limit}`
-        : null,
+    prevPage: pag > 1 ? `${baseUrl}?pag=${pag - 1}&limit=${limit}` : null,
     page: pag,
     page_limit: limit,
-    nextPage:
-      pag < numPage
-        ? `http://localhost:3000/characters?pag=${pag + 1}&limit=${limit}`
-        : null,
+    nextPage: pag < numPage ? `${baseUrl}?pag=${pag + 1}&limit=${limit}` : null,
     data: allCharacters,
   });
 };
