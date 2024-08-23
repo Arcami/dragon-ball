@@ -4,20 +4,12 @@
 const express = require("express");
 const { connectDB } = require("./src/utils/db");
 const env = require("dotenv");
-const cloudinary = require("cloudinary").v2;
 const router = require("./src/api/routes/character.routes");
 
 // ========================================
 // 2. Environment Configuration
 // ========================================
 env.config(); // Load environment variables
-
-// Configure Cloudinary
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.CLOUD_API_KEY,
-  api_secret: process.env.CLOUD_API_SECRET,
-});
 
 // ========================================
 // 3. Database Connection
