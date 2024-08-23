@@ -30,4 +30,10 @@ const getCharacters = async (req, res) => {
   });
 };
 
-module.exports = { getCharacters };
+const getCharacterById = async (req, res) => {
+  const { id } = req.params;
+  const character = await Character.findById(id);
+  res.json(character);
+};
+
+module.exports = { getCharacters, getCharacterById };
