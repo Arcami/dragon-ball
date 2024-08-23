@@ -5,6 +5,7 @@ const express = require("express");
 const { connectDB } = require("./src/utils/db");
 const env = require("dotenv");
 const router = require("./src/api/routes/character.routes");
+const cors = require("cors");
 
 // ========================================
 // 2. Environment Configuration
@@ -26,6 +27,7 @@ const PORT = process.env.PORT || 3000; // Define server port with default
 // 5. Middleware Configuration
 // ========================================
 server.use(express.json()); // Middleware for parsing JSON bodies
+server.use(cors());
 
 // Add other middleware as needed:
 // server.use(someMiddleware());
