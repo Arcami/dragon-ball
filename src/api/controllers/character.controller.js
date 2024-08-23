@@ -18,7 +18,9 @@ const getCharacters = async (req, res) => {
     .limit(limit);
 
   // Construct base URL dynamically from the request
-  const baseUrl = `${req.protocol}://${req.get("host")}${req.baseUrl}`;
+  const baseUrl = `${req.protocol}://${req.get("host")}${
+    req.baseUrl
+  }/characters/`;
 
   res.json({
     characters_retrieved: allCharacters.length,
