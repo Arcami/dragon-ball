@@ -1,25 +1,22 @@
 const Character = require("../models/character.model");
 
 const getCharacters = async (req, res) => {
-  let pag = parseInt(req.query.pag);
-  let limit = parseInt(req.query.limit);
+  let pag = parseInt(req.query.pag) || 1; // Default to page 1 if not provided
+  let limit = parseInt(req.query.limit) || 20; // Default to limit 20 if not provided
+
+  // Ensure limit is within range
+  limit = limit > 20 ? 20 : limit < 1 ? 1 : limit;
+
   const numCharacters = await Character.countDocuments();
+  const numPage = Math.ceil(numCharacters / limit);
 
-  limit = !isNaN(limit) ? limit : 1;
-  limit = limit > 20 || limit < 1 ? 20 : limit;
-  let numPage = Math.ceil(numCharacters / limit);
-  if (pag > numPage) {
-    pag = numPage;
-  }
-  if (pag < 1) {
-    pag = 1;
-  }
-
-  pag = !isNaN(pag) ? pag : 1;
+  // Ensure page is within range
+  pag = Math.max(1, Math.min(pag, numPage));
 
   const allCharacters = await Character.find()
     .skip((pag - 1) * limit)
     .limit(limit);
+
   res.json({
     characters_retrieved: allCharacters.length,
     prevPage:
