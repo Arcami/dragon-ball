@@ -39,7 +39,7 @@ const getCharacterById = async (req, res) => {
 };
 
 const updateCharacterById = async (req, res) => {
-  const updateCharacter = requ.body;
+  const updateCharacter = req.body;
   const { id } = req.params;
   const character = await Character.findByIdAndUpdate(id, updateCharacter, {
     new: true,
